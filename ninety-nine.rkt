@@ -175,3 +175,21 @@
     [(= st en) (list st)]
     [(< st en) (cons st (my-range (+ st 1) en))]
     [(> st en) (cons st (my-range (- st 1) en))]))
+
+; P23: Select random n-long permutation of a list.
+(define (rand-perm lst n [len #f])
+  (cond
+    [(= n 0) null]
+    [len     (let ([ix (random len)])
+               (cons (list-ref lst ix)
+                     (rand-perm (remove-at lst (+ ix 1)) (- n 1) (- len 1))))]
+    [#t      (rand-perm lst n (length lst))]))
+
+; P24: Lotto select!
+(define (lotto-select n max-num)
+  (rand-perm (my-range 1 max-num) n))
+
+; P25: Fully randomly permute a list.
+(define (rand-permutation lst)
+  (let ([n (length lst)])
+    (rand-perm lst n n)))
