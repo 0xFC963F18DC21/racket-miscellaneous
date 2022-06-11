@@ -193,3 +193,13 @@
 (define (rand-permutation lst)
   (let ([n (length lst)])
     (rand-perm lst n n)))
+
+; P26: N-combinations of a list.
+(define (comb n lst [len #f])
+  (cond
+    [(not len)               (comb n lst (length lst))]
+    [(or (< len n) (<= n 0)) (list null)]
+    [(= len n)               (list lst)]
+    [(> n 0)                 (append (map (λ (l) (cons (car lst) l))
+                                          (comb (- n 1) (cdr lst) (- len 1)))
+                                     (comb n (cdr lst) (- len 1)))]))
